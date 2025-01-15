@@ -1,0 +1,48 @@
+# JAX and related libraries
+jax[cuda12_pip]
+-f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+
+# Additional JAX-related libraries
+flax
+optax
+orbax
+chex
+
+# RL libraries
+gymnasium
+brax
+rlax
+distrax
+
+# Additional libraries
+
+## Dataset
+torch
+torchvision
+
+## Data Manipulation and Analysis
+polars
+
+## Data Visualization
+matplotlib
+seaborn
+plotly
+imageio
+
+## Machine Learning
+wandb
+ml_collections
+
+## Hyperparameter management
+hydra-core
+hydra-optuna-sweeper
+mlflow
+PyYAML
+
+## Utilities
+tensorflow
+tqdm
+pytest
+typing
+numpyro
+clu # https://github.com/Jovana-Gentic/VAE_celeba/blob/main/jax-vae-celeba.ipynb

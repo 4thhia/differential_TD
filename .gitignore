@@ -1,0 +1,15 @@
+**/__pycache__/
+**/.pytest_cache/
+**/tmp/
+**/wandb/
+**/logs/
+**/_logs/
+**/models/
+**/out/
+**/outputs/
+**/mlruns/
+**/multirun/
+**/.DS_Store
+**/experiments/
+**/tests/
+memo.txt

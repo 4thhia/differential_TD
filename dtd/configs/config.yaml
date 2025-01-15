@@ -1,0 +1,27 @@
+# config.yaml
+defaults:
+  - _self_
+  - algorithm: ppo
+
+hydra:
+  run:
+    dir: _self_
+  job_logging:
+    disable_existing_loggers: true
+
+run_name: _
+run_time: _
+env:
+  name: ant
+  backend: generalized
+  num_envs: 128
+  num_envs_for_eval: 32
+  noise_lvl: 0.05
+  action_size: _
+  observation_size: _
+  dt: _
+
+load: false
+save: false
+reward_curves: false
+seed: 0
