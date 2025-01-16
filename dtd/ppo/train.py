@@ -167,7 +167,7 @@ def train_baseline(
 
     return runner_state, metrics
 
-@jax.jit
+
 def train_sde(
     rng: jax.random.PRNGKey,
     env: Env,
@@ -186,6 +186,7 @@ def train_sde(
     vf_coef: float,
     normalize_advantage: bool,
 ):
+    @jax.jit
     def update_step(runner_state, unused):
         # COLLECT TRAJECTORIES
         def env_step(runner_state, unused):

@@ -1,0 +1,64 @@
+Metadata-Version: 2.2
+Name: autorl-sweepers
+Version: 0.1.0
+Summary: AutoRL Sweepers for Hydra
+Author: TheEimer
+Author-email: t.eimer@ai.uni-hannover.de
+License: Apache-2.0
+Platform: Linux
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Natural Language :: English
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: hydra-core==1.3.2
+Requires-Dist: rich==13.4.2
+Requires-Dist: hydra_colorlog==1.2.0
+Requires-Dist: hydra-submitit-launcher==1.2.0
+Requires-Dist: pandas==2.0.3
+Requires-Dist: configspace==0.7.1
+Requires-Dist: wandb==0.15.5
+Requires-Dist: pre-commit==3.3.3
+Provides-Extra: dehb
+Requires-Dist: dehb@ git+https://github.com/automl/DEHB.git@master ; extra == "dehb"
+Provides-Extra: pb2
+Requires-Dist: GPy==1.10.0; extra == "pb2"
+Requires-Dist: scipy==1.11.1; extra == "pb2"
+Requires-Dist: scikit-learn==1.3.0; extra == "pb2"
+Provides-Extra: bgt
+Requires-Dist: gpytorch==1.11; extra == "bgt"
+Requires-Dist: scipy==1.11.1; extra == "bgt"
+Requires-Dist: scikit-learn==1.3.0; extra == "bgt"
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Provides-Extra: examples
+Requires-Dist: stable-baselines3[extra]==2.0.0; extra == "examples"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: license
+Dynamic: platform
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# differential TD (dTD)
+
+brax: https://github.com/google/brax/tree/main
+gymnax: https://github.com/RobertTLange/gymnax
+how to auto RL: https://github.com/facebookresearch/how-to-autorl
+purejaxrl: https://github.com/luchris429/purejaxrl/blob/main/examples/walkthrough.ipynb
