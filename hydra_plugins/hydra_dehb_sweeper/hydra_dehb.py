@@ -386,6 +386,14 @@ class HydraDEHB(dehb.DEHB):
                 if verbose:
                     self._verbosity_runtime(fevals, brackets, total_cost, total_time_cost)
                     log.info("Best score seen/Incumbent score: {}".format(np.round(self.inc_score, decimals=2)))
+                    if self.inc_config is not None:
+                        log.info("Corresponding Incumbent config:")
+                        if self.configspace:
+                            config = self.vector_to_configspace(self.inc_config)
+                            for k, v in config.get_dictionary().items():
+                                log.info("{}: {}".format(k, v))
+                        else:
+                            log.info("{}".format(self.inc_config))
                 self._verbosity_debug()
                 if self.inc_config is not None:
                     self._save_incumbent(name)

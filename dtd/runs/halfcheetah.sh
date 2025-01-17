@@ -2,16 +2,16 @@
 # tuning parameters: lmb.lr / regularization coef / weightunet.lr
 
 export XLA_PYTHON_CLIENT_MEM_FRACTION=.70
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=3
 
 
 UNIXTIME=$(date +%s)
-MAX_BUDGET="1e6"
+MAX_BUDGET="1e7"
 MIN_BUDGET="1e5"
 
 ENV_NAME="halfcheetah"
 TD="sde"
-NOISE_LVL="0.05"
+NOISE_LVL="0.10"
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 ALGO="ppo"

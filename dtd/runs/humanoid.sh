@@ -7,11 +7,11 @@ export CUDA_VISIBLE_DEVICES=1
 
 UNIXTIME=$(date +%s)
 MAX_BUDGET="1e7"
-MIN_BUDGET="1e5"
+MIN_BUDGET="1e4"
 
 ENV_NAME="humanoid"
 TD="sde"
-NOISE_LVL="0.05"
+NOISE_LVL="0.10"
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 ALGO="ppo"

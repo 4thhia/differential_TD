@@ -1,20 +1,32 @@
-# config.yaml
 defaults:
   - _self_
   - algorithm: ppo
+  - search_space: ppo
+  - override hydra/sweeper: DEHB
 
 hydra:
+  sweeper:
+    dehb_kwargs:
+      mutation_factor: 0.2
+      max_budget: ${algorithm.total_timesteps}
+      min_budget: 2e3
+      deepcave: False
+    search_space: ${search_space}
+    total_brackets: 3
+    budget_variable: algorithm.total_timesteps
   run:
-    dir: _self_
+    dir: ./tmp/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  sweep:
+    dir: ./tmp/${now:%Y-%m-%d}/${now:%H-%M-%S}
   job_logging:
-    disable_existing_loggers: true
+    level: _
 
 run_name: _
 run_time: _
 env:
   name: ant
   backend: generalized
-  num_envs: 128
+  num_envs: 64
   num_envs_for_eval: 32
   noise_lvl: 0.05
   action_size: _

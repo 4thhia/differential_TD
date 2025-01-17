@@ -12,7 +12,7 @@ from dtd.ppo.networks import setup_network
 from dtd.ppo.train import train_baseline, train_sde
 
 
-@hydra.main(config_path="../configs", config_name="tune", version_base="1.3")
+@hydra.main(config_path="../configs", config_name="config", version_base="1.3")
 def main(cfg: DictConfig):
     cfg.run_name = (
         f"{cfg.algorithm.agent_class}__{cfg.env.name}__{cfg.algorithm.TD}"
