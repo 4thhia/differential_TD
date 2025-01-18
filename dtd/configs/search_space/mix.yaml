@@ -1,0 +1,45 @@
+hyperparameters:
+  algorithm.num_env_steps_per_update:
+    type: categorical
+    choices: [8, 16, 32]
+  algorithm.minibatch_size:
+    type: categorical
+    choices: [256, 512]
+  algorithm.num_epochs_per_update:
+    type: uniform_int
+    lower: 5
+    upper: 20
+    log: false
+  algorithm.model_kwargs.learning_rate:
+    type: uniform_float
+    lower: 0.000001
+    upper: 0.005
+    log: true
+  algorithm.model_kwargs.normalize_advantage:
+    type: categorical
+    choices: [0.0, 1.0]
+  algorithm.model_kwargs.gae_lambda:
+    type: uniform_float
+    lower: 0.8
+    upper: 0.9999
+    log: false
+  algorithm.model_kwargs.clip_range:
+    type: uniform_float
+    lower: 0.0
+    upper: 0.9
+    log: false
+  algorithm.model_kwargs.ent_coef:
+    type: uniform_float
+    lower: 0.0
+    upper: 0.3
+    log: false
+  algorithm.model_kwargs.vf_coef:
+    type: uniform_float
+    lower: 0.0
+    upper: 1.0
+    log: false
+  algorithm.model_kwargs.mix_ratio:
+    type: uniform_float
+    lower: 0.0
+    upper: 1.0
+    log: false

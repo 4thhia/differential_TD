@@ -15,6 +15,9 @@ hyperparameters:
     lower: 0.000001
     upper: 0.005
     log: true
+  algorithm.model_kwargs.normalize_advantage:
+    type: categorical
+    choices: [0.0, 1.0]
   algorithm.model_kwargs.gae_lambda:
     type: uniform_float
     lower: 0.8

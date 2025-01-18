@@ -1,6 +1,6 @@
 agent_class: ppo
 seed: 42
-TD: baseline
+TD: sde
 total_timesteps: 1e6
 num_updates: _
 num_minibatches: _
@@ -16,6 +16,6 @@ model_kwargs:
   gamma: 0.99
   gae_lambda: 0.95
   clip_range: 0.2
-  normalize_advantage: True
+  normalize_advantage: 1.0
   ent_coef: 0.0
   vf_coef: 0.5

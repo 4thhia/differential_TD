@@ -9,7 +9,7 @@ import optax
 from dtd.common.env_wrappers import create_env
 from dtd.common.train import evaluate_policy
 from dtd.ppo.networks import setup_network
-from dtd.ppo.train import train_baseline, train_sde
+from dtd.ppo.train import train_baseline, train_sde, train_mix
 
 
 @hydra.main(config_path="../configs", config_name="config", version_base="1.3")
@@ -95,6 +95,27 @@ def main(cfg: DictConfig):
             ent_coef=cfg.algorithm.model_kwargs.ent_coef,
             vf_coef=cfg.algorithm.model_kwargs.vf_coef,
             normalize_advantage=cfg.algorithm.model_kwargs.normalize_advantage,
+        )
+    elif cfg.algorithm.TD=="mix":
+        print(f'TD type: mix')
+        (rng, network, _, _), metrics = train_mix(
+            rng=rng,
+            env=env,
+            num_envs=cfg.env.num_envs,
+            noise_lvl=cfg.env.noise_lvl,
+            network=network,
+            num_updates=cfg.algorithm.num_updates,
+            num_env_steps_per_update=cfg.algorithm.num_env_steps_per_update,
+            num_epochs_per_update=cfg.algorithm.num_epochs_per_update,
+            minibatch_size=cfg.algorithm.minibatch_size,
+            num_minibatches=cfg.algorithm.num_minibatches,
+            gamma=cfg.algorithm.model_kwargs.gamma,
+            gae_lambda=cfg.algorithm.model_kwargs.gae_lambda,
+            clip_range=cfg.algorithm.model_kwargs.clip_range,
+            ent_coef=cfg.algorithm.model_kwargs.ent_coef,
+            vf_coef=cfg.algorithm.model_kwargs.vf_coef,
+            normalize_advantage=cfg.algorithm.model_kwargs.normalize_advantage,
+            mix_ratio=cfg.algorithm.model_kwargs.mix_ratio,
         )
     else:
         raise ValueError(
