@@ -7,7 +7,7 @@ export CUDA_VISIBLE_DEVICES=0
 
 UNIXTIME=$(date +%s)
 ALGO="ppo"
-ENV_NAME="ant"
+ENV_NAME="hopper"
 MAX_BUDGET="1e6"
 MIN_BUDGET="1e4"
 

@@ -12,4 +12,5 @@
 **/.DS_Store
 **/experiments/
 **/tests/
+**/hpo_results/
 memo.txt
