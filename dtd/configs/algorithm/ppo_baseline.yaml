@@ -1,6 +1,6 @@
 agent_class: ppo
-seed: 42
 TD: baseline
+seed: 42
 total_timesteps: 1e6
 num_updates: _
 num_minibatches: _

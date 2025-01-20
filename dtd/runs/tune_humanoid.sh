@@ -7,18 +7,18 @@ export CUDA_VISIBLE_DEVICES=0
 
 UNIXTIME=$(date +%s)
 ALGO="ppo"
-ENV_NAME="ant"
-MAX_BUDGET="1e6"
-MIN_BUDGET="1e4"
+ENV_NAME="humanoid"
+MAX_BUDGET="1e7"
+MIN_BUDGET="1e5"
 
-TD="baseline"
-NOISE_LVL="0.05"
+TD="mix"
+NOISE_LVL="0.0"
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 
 python3 ${ALGO}/tune.py --multirun \
     hydra.run.dir="configs/logs/${ALGO}/${ENV_NAME}/${TD}/${UNIXTIME}" \
-    algorithm=${TD} \
+    algorithm=${ALGO}_${TD} \
     algorithm.total_timesteps=${MAX_BUDGET} \
     hydra.sweeper.dehb_kwargs.min_budget=${MIN_BUDGET} \
     env.name=${ENV_NAME} \

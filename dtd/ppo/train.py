@@ -55,7 +55,7 @@ def train_baseline(
         # CALCULATE ADVANTAGE AND TARGET
         rng, network, state, last_obs = runner_state
         last_val = network.critic.apply_fn(network.critic.params, last_obs)
-        def get_advantages(traj_batch, last_val):
+        def calculate_advantages(traj_batch, last_val):
             def gae(advantage_and_next_value, transition):
                 advantage, next_value = advantage_and_next_value
                 value, reward, done = (
@@ -73,7 +73,7 @@ def train_baseline(
             )
             return advantages, advantages + traj_batch.value
 
-        advantages, targets = get_advantages(traj_batch, last_val)
+        advantages, targets = calculate_advantages(traj_batch, last_val)
 
         # UPDATE NETWORK
         def update_network(update_state, unused):
@@ -216,7 +216,7 @@ def train_sde(
         # CALCULATE ADVANTAGE
         rng, network, state, last_obs = runner_state
         last_val = network.critic.apply_fn(network.critic.params, last_obs)
-        def get_advantages(traj_batch, last_val):
+        def calculate_advantages(traj_batch, last_val):
             def gae(advantage_and_next_value, transition):
                 advantage, next_value = advantage_and_next_value
                 value, reward, done = (
@@ -234,11 +234,11 @@ def train_sde(
             )
             return advantages
 
-        advantages = get_advantages(traj_batch, last_val)
+        advantages = calculate_advantages(traj_batch, last_val)
 
         # CALCULATE TARGET
-        def get_targets(traj_batch, last_val):
-            def get_target(next_value, transition):
+        def calculate_targets(traj_batch, last_val):
+            def calculate_target(next_value, transition):
                 value, reward, done = (
                     transition.value,
                     transition.reward,
@@ -248,12 +248,12 @@ def train_sde(
                 return value, target
 
             _, targets = jax.lax.scan(
-                get_target, last_val, traj_batch,
+                calculate_target, last_val, traj_batch,
                 reverse=True, unroll=16,
             )
             return targets
 
-        targets = get_targets(traj_batch, last_val)
+        targets = calculate_targets(traj_batch, last_val)
 
         # UPDATE NETWORK
         def update_network(update_state, unused):
@@ -411,7 +411,7 @@ def train_mix(
         # CALCULATE ADVANTAGE
         rng, network, state, last_obs = runner_state
         last_val = network.critic.apply_fn(network.critic.params, last_obs)
-        def get_advantages(traj_batch, last_val):
+        def calculate_advantages(traj_batch, last_val):
             def gae(advantage_and_next_value, transition):
                 advantage, next_value = advantage_and_next_value
                 value, reward, done = (
@@ -429,11 +429,11 @@ def train_mix(
             )
             return advantages
 
-        advantages = get_advantages(traj_batch, last_val)
+        advantages = calculate_advantages(traj_batch, last_val)
 
         # CALCULATE TARGET
         def get_sde_targets(traj_batch, last_val):
-            def get_target(next_value, transition):
+            def calculate_target(next_value, transition):
                 value, reward, done = (
                     transition.value,
                     transition.reward,
@@ -443,7 +443,7 @@ def train_mix(
                 return value, target
 
             _, targets = jax.lax.scan(
-                get_target, last_val, traj_batch,
+                calculate_target, last_val, traj_batch,
                 reverse=True, unroll=16,
             )
             return targets

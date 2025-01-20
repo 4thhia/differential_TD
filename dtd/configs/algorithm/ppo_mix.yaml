@@ -1,6 +1,6 @@
 agent_class: ppo
+TD: mix
 seed: 42
-TD: sde
 total_timesteps: 1e6
 num_updates: _
 num_minibatches: _
@@ -19,3 +19,4 @@ model_kwargs:
   normalize_advantage: 1.0
   ent_coef: 0.0
   vf_coef: 0.5
+  mix_ratio: 0.5

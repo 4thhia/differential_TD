@@ -18,10 +18,13 @@ tests/test_dsV_ssds.py
 tests/test_envs.py
 tests/test_jax.py
 tests/test_jaxtqdm.py
+tests/test_loadjson_and_plot.py
 tests/test_nested_scan.py
+tests/test_plot.py
 tests/test_plot0.py
 tests/test_plot1.py
 tests/test_scan.py
+tests/test_scan2.py
 tests/test_train.py
 tests/test_train_1step.py
 tests/test_vecdot.py

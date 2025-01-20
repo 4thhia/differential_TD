@@ -16,9 +16,9 @@ NOISE_LVL="0.01"
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 
-python3 ${ALGO}/tune.py \
+python3 ${ALGO}/tune.py --multirun \
     hydra.run.dir="configs/logs/${ALGO}/${ENV_NAME}/${TD}/${UNIXTIME}" \
-    algorithm=${ALGO}_${TD} \
+    algorithm=${TD} \
     algorithm.total_timesteps=${MAX_BUDGET} \
     hydra.sweeper.dehb_kwargs.min_budget=${MIN_BUDGET} \
     env.name=${ENV_NAME} \
