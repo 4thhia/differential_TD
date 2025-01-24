@@ -13,7 +13,10 @@ hydra_plugins/hydra_dehb_sweeper/dehb_sweeper_backend.py
 hydra_plugins/hydra_dehb_sweeper/hydra_dehb.py
 hydra_plugins/utils/search_space_encoding.py
 tests/test_batch.py
+tests/test_brown.py
+tests/test_brownian_motion.py
 tests/test_cfg.py
+tests/test_dmontrol.py
 tests/test_dsV_ssds.py
 tests/test_envs.py
 tests/test_jax.py
@@ -28,3 +31,4 @@ tests/test_scan2.py
 tests/test_train.py
 tests/test_train_1step.py
 tests/test_vecdot.py
+tests/test_wrapper.py

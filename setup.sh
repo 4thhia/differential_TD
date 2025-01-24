@@ -27,3 +27,18 @@ for file in "${files[@]}"; do
     echo "File not found: $file"
   fi
 done
+
+
+#git clone https://github.com/shacklettbp/madrona_mjx.git
+#cd madrona_mjx
+#git submodule update --init --recursive
+
+# mkdir build
+#cd build
+
+#export PATH=$PATH:/home/4thhia/.local/bin
+#cmake ..
+#make -j
+
+#cd ..
+#pip install -e .
