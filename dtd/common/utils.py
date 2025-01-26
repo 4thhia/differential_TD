@@ -3,7 +3,6 @@ import json
 from omegaconf import OmegaConf
 import matplotlib.pyplot as plt
 
-
 import numpy as np
 import jax
 import orbax.checkpoint as ocp
@@ -11,14 +10,12 @@ import orbax.checkpoint as ocp
 
 def create_ckpt_mngr(cfg) -> ocp.CheckpointManager:
     # Orbax checkpoint manager setup
-    checkpoint_dir = f"models/{cfg.algorithm.agent_class}/{cfg.experiment_name}/{cfg.sub_experiment_name}/{cfg.run_time}/"
+    checkpoint_dir = f"models/{cfg.algorithm.agent_class}/{cfg.run_time}/"
 
     os.makedirs(checkpoint_dir, exist_ok=True)
     # Configure CheckpointManager with the new format
     ckpt_options = ocp.CheckpointManagerOptions(
-        save_interval_steps=cfg.training.save_interval,
-        max_to_keep=cfg.training.save_top_k,
-        step_format_fixed_length=3,
+        step_format_fixed_length=1,
         enable_async_checkpointing=True,
         cleanup_tmp_directories=True,
     )

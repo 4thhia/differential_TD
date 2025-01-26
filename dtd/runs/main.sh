@@ -1,19 +1,20 @@
 #!/bin/bash
 
-export XLA_PYTHON_CLIENT_MEM_FRACTION=.85
-export CUDA_VISIBLE_DEVICES=0 #,1,2
+export XLA_PYTHON_CLIENT_MEM_FRACTION=.70
+export CUDA_VISIBLE_DEVICES=3 #,1,2
 
 
 UNIXTIME=$(date +%s)
 ALGO="ppo"
-ENV_NAME="ant"
+ENV_NAME="humanoid"
 MAX_BUDGET="2500000"
 
 TD="mix" # baseline / sde / mix
-NOISE_LVL="0.01"
+NOISE_LVL="0.00"
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
-source ./incumbent/${ENV_NAME}/${TD}/noise${NOISE_LVL_STR}.sh
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+source "${SCRIPT_DIR}/incumbent/${ENV_NAME}/${TD}/noise${NOISE_LVL_STR}.sh"
 
 
 python3 ${ALGO}/main.py \
