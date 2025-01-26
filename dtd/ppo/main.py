@@ -56,6 +56,8 @@ def main(cfg: DictConfig):
         num_updates=cfg.algorithm.num_updates,
     )
 
+    metricses = []
+
     if cfg.algorithm.TD=="baseline":
         print(f'TD type: baseline')
         (rng, network, _, _), metrics = train_baseline(
@@ -76,35 +78,43 @@ def main(cfg: DictConfig):
             vf_coef=cfg.algorithm.model_kwargs.vf_coef,
             normalize_advantage=cfg.algorithm.model_kwargs.normalize_advantage,
         )
+        metricses.append(metrics)
     elif cfg.algorithm.TD=="mix":
         print(f'TD type: mix')
         cfg.run_name += f"__mix_ratio={cfg.algorithm.model_kwargs.mix_ratio}"
-        (rng, network, _, _), metrics = train_mix(
-            rng=rng,
-            env=env,
-            num_envs=cfg.env.num_envs,
-            noise_lvl=cfg.env.noise_lvl,
-            network=network,
-            num_updates=cfg.algorithm.num_updates,
-            num_env_steps_per_update=cfg.algorithm.num_env_steps_per_update,
-            num_epochs_per_update=cfg.algorithm.num_epochs_per_update,
-            minibatch_size=cfg.algorithm.minibatch_size,
-            num_minibatches=cfg.algorithm.num_minibatches,
-            gamma=cfg.algorithm.model_kwargs.gamma,
-            gae_lambda=cfg.algorithm.model_kwargs.gae_lambda,
-            clip_range=cfg.algorithm.model_kwargs.clip_range,
-            ent_coef=cfg.algorithm.model_kwargs.ent_coef,
-            vf_coef=cfg.algorithm.model_kwargs.vf_coef,
-            normalize_advantage=cfg.algorithm.model_kwargs.normalize_advantage,
-            mix_ratio=cfg.algorithm.model_kwargs.mix_ratio,
-        )
+        for i in range(4):
+            (rng, network, _, _), metrics = train_mix(
+                rng=rng,
+                env=env,
+                num_envs=cfg.env.num_envs,
+                noise_lvl=cfg.env.noise_lvl,
+                network=network,
+                num_updates=cfg.algorithm.num_updates,
+                num_env_steps_per_update=cfg.algorithm.num_env_steps_per_update,
+                num_epochs_per_update=cfg.algorithm.num_epochs_per_update,
+                minibatch_size=cfg.algorithm.minibatch_size,
+                num_minibatches=cfg.algorithm.num_minibatches,
+                gamma=cfg.algorithm.model_kwargs.gamma,
+                gae_lambda=cfg.algorithm.model_kwargs.gae_lambda,
+                clip_range=cfg.algorithm.model_kwargs.clip_range,
+                ent_coef=cfg.algorithm.model_kwargs.ent_coef,
+                vf_coef=cfg.algorithm.model_kwargs.vf_coef,
+                normalize_advantage=cfg.algorithm.model_kwargs.normalize_advantage,
+                mix_ratio=cfg.algorithm.model_kwargs.mix_ratio,
+            )
+            metricses.append(metrics)
     else:
         raise ValueError(
         f"Invalid value for cfg.algorithm.TD: {cfg.algorithm.TD}. "
         "Expected 'baseline' or 'sde'."
     )
 
-    means, stds = calculate_return_stats_per_update(metrics["returned_episode_returns"])
+    meanses = []
+    stdses = []
+    for i in range(4):
+        means, stds = calculate_return_stats_per_update(metricses[i]["returned_episode_returns"])
+        meanses += means
+        stdses += stds
 
     save_dir = f"result/metrics/{cfg.algorithm.agent_class}/{cfg.env.name}/{cfg.algorithm.TD}/{cfg.run_name}"
     os.makedirs(save_metrics_dir, exist_ok=True)

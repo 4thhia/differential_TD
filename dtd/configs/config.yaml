@@ -1,6 +1,6 @@
 defaults:
   - _self_
-  - algorithm: ppo_mix
+  - algorithm: ppo_baseline
   - search_space: ${algorithm}
   - override hydra/sweeper: DEHB
 

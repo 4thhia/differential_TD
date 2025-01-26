@@ -19,3 +19,4 @@ model_kwargs:
   normalize_advantage: 1.0
   ent_coef: 0.0
   vf_coef: 0.5
+  mix_ratio: _

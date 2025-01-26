@@ -23,6 +23,7 @@ tests/test_jax.py
 tests/test_jaxtqdm.py
 tests/test_loadjson_and_plot.py
 tests/test_nested_scan.py
+tests/test_playground.py
 tests/test_plot.py
 tests/test_plot0.py
 tests/test_plot1.py

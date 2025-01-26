@@ -1,4 +1,3 @@
-#! NEED TO OVERRIDE
 # Best score seen/Incumbent score: -397.9
 NUM_ENV_STEPS_PER_UPDATE="16"
 NUM_EPOCHS_PER_UPDATE="15"
