@@ -6,6 +6,7 @@ import jax
 import jax.numpy as jnp
 from flax.training.train_state import TrainState
 import optax
+import orbax.checkpoint as ocp
 
 from dtd.common.env_wrappers import create_env
 from dtd.common.train import evaluate_policy, calculate_return_stats_per_update
@@ -57,7 +58,12 @@ def main(cfg: DictConfig):
         num_updates=cfg.algorithm.num_updates,
     )
 
-    ckpt_mngr = create_ckpt_mngr(cfg)
+    ckpt_mngr = create_ckpt_mngr(
+        agent_class=cfg.algorithm.agent_class,
+        env_name=cfg.env.name,
+        TD=cfg.algorithm.TD,
+        noise_lvl=cfg.env.noise_lvl,
+    )
 
 
     if cfg.algorithm.TD=="baseline":

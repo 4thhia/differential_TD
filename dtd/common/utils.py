@@ -8,9 +8,16 @@ import jax
 import orbax.checkpoint as ocp
 
 
-def create_ckpt_mngr(cfg) -> ocp.CheckpointManager:
+def create_ckpt_mngr(
+    agent_class: str,
+    env_name: str,
+    TD: str,
+    noise_lvl: str,
+) -> ocp.CheckpointManager:
     # Orbax checkpoint manager setup
-    checkpoint_dir = f"models/{cfg.algorithm.agent_class}/{cfg.run_time}/"
+    noise_lvl_str = str(noise_lvl).replace('.', '').zfill(3)
+
+    checkpoint_dir = f"models/{agent_class}/{env_name}/{TD}/noise{noise_lvl_str}"
 
     os.makedirs(checkpoint_dir, exist_ok=True)
     # Configure CheckpointManager with the new format
