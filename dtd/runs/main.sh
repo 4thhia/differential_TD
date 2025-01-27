@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export XLA_PYTHON_CLIENT_MEM_FRACTION=.70
-export CUDA_VISIBLE_DEVICES=3 #,1,2
+export CUDA_VISIBLE_DEVICES=2 #,1,2
 
 
 UNIXTIME=$(date +%s)
@@ -9,8 +9,8 @@ ALGO="ppo"
 ENV_NAME="humanoid"
 MAX_BUDGET="2500000"
 
-TD="mix" # baseline / sde / mix
-NOISE_LVL="0.00"
+TD="baseline" # baseline / sde / mix
+NOISE_LVL="0.05"
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -18,7 +18,7 @@ source "${SCRIPT_DIR}/incumbent/${ENV_NAME}/${TD}/noise${NOISE_LVL_STR}.sh"
 
 
 python3 ${ALGO}/main.py \
-    hydra.run.dir="configs/logs/${ALGO}/${ENV_NAME}/${TD}/${UNIXTIME}" \
+    hydra.run.dir="configs/logs/${ALGO}/${ENV_NAME}/${TD}/noise${NOISE_LVL_STR}/${UNIXTIME}" \
     env.name=${ENV_NAME} \
     env.noise_lvl=${NOISE_LVL} \
     algorithm=${ALGO}_${TD} \

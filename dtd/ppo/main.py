@@ -1,6 +1,7 @@
 import os
+import json
 import hydra
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 
 import jax
 import jax.numpy as jnp
@@ -63,6 +64,7 @@ def main(cfg: DictConfig):
         env_name=cfg.env.name,
         TD=cfg.algorithm.TD,
         noise_lvl=cfg.env.noise_lvl,
+        run_time=cfg.run_time,
     )
 
 
@@ -122,15 +124,24 @@ def main(cfg: DictConfig):
     }
     ckpt_mngr.save(step=1, args=ocp.args.StandardSave(states))
 
-    means, stds = calculate_return_stats_per_update(metricses[i]["returned_episode_returns"])
+    means, stds = calculate_return_stats_per_update(metrics["returned_episode_returns"])
 
-    save_dir = f"result/metrics/{cfg.algorithm.agent_class}/{cfg.env.name}/{cfg.algorithm.TD}/{cfg.run_name}"
-    os.makedirs(save_metrics_dir, exist_ok=True)
+    save_dir = f"result/metrics/{cfg.algorithm.agent_class}/{cfg.env.name}/noise{str(cfg.env.noise_lvl).replace('.', '').zfill(3)}/{cfg.algorithm.TD}/{cfg.run_time}"
+    print(f"save_dir:{save_dir}")
+    os.makedirs(save_dir, exist_ok=True)
+    cfg_dict = OmegaConf.to_container(cfg, resolve=True)
+
+    # 2. JSONファイルとして保存
+    with open(os.path.join(save_dir, "configs.json"), "w") as f:
+        json.dump(cfg_dict, f, indent=4)
+
     with open(os.path.join(save_dir, "means.json"), "w") as f:
         json.dump(means, f)
+        print(f"Means saved to {save_dir}/means.json")
 
     with open(os.path.join(save_dir, "stds.json"), "w") as f:
         json.dump(stds, f)
+        print(f"Stds saved to {save_dir}/stds.json")
 
 
 if __name__ == "__main__":
