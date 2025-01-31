@@ -131,7 +131,6 @@ def main(cfg: DictConfig):
     os.makedirs(save_dir, exist_ok=True)
     cfg_dict = OmegaConf.to_container(cfg, resolve=True)
 
-    # 2. JSONファイルとして保存
     with open(os.path.join(save_dir, "configs.json"), "w") as f:
         json.dump(cfg_dict, f, indent=4)
 

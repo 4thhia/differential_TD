@@ -1,6 +1,10 @@
 # differential TD (dTD)
+This is the official repository for **differential TD**
 
-brax: https://github.com/google/brax/tree/main
-gymnax: https://github.com/RobertTLange/gymnax
-how to auto RL: https://github.com/facebookresearch/how-to-autorl
-purejaxrl: https://github.com/luchris429/purejaxrl/blob/main/examples/walkthrough.ipynb
+The implementation is inspired by the following repositories:
+
+How to AutoRL by Facebook Research
+PureJaxRL, with example walkthrough
+
+- [How to AutoRL by Facebook Research](https://github.com/facebookresearch/how-to-autorl)
+- [PureJaxRL, with example walkthrough](https://github.com/luchris429/purejaxrl/blob/main/examples/walkthrough.ipynb)
