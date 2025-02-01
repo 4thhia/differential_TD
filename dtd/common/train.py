@@ -16,7 +16,7 @@ class Transition(NamedTuple):
     info: jnp.ndarray
 
 
-def dsV_s_fn_t(value_fn, params, state_t_plus_dt, state_t):
+def dsV_s_fn(value_fn, params, state_t_plus_dt, state_t):
     ds = state_t_plus_dt - state_t
     _, dsV_s = jax.jvp(
         lambda state: value_fn(params, state),
@@ -24,7 +24,16 @@ def dsV_s_fn_t(value_fn, params, state_t_plus_dt, state_t):
     )
     return dsV_s
 
-def dsV_s_fn_t_plus_dt(value_fn, params, state_t_plus_dt, state_t):
+def dsV_ssds_fn(value_fn, params, state_t_plus_dt, state_t):
+    ds = state_t_plus_dt - state_t
+    dsV_ss_fn = jax.grad(dsV_s_fn, argnums=-1)
+    batch_dsV_ss_fn = jax.vmap(dsV_ss_fn, in_axes=(None, None, 0, 0))
+    dsV_ss = batch_dsV_ss_fn(value_fn, params, state_t_plus_dt, state_t)
+    dsV_ssds = jnp.vecdot(dsV_ss, ds, axis=-1)
+    return dsV_ssds
+
+
+def dsV_s_fn_plus(value_fn, params, state_t_plus_dt, state_t):
     ds = state_t_plus_dt - state_t
     _, dsV_s = jax.jvp(
         lambda state: value_fn(params, state),
@@ -32,18 +41,10 @@ def dsV_s_fn_t_plus_dt(value_fn, params, state_t_plus_dt, state_t):
     )
     return dsV_s
 
-def dsV_ssds_fn_t(value_fn, params, state_t_plus_dt, state_t):
+def dsV_ssds_fn_plus(value_fn, params, state_t_plus_dt, state_t):
     ds = state_t_plus_dt - state_t
-    dsV_ss_fn = jax.grad(dsV_s_fn, argnums=-1)
-    batch_dsV_ss_fn = jax.vmap(dsV_ss_fn_t, in_axes=(None, None, 0, 0))
-    dsV_ss = batch_dsV_ss_fn(value_fn, params, state_t_plus_dt, state_t)
-    dsV_ssds = jnp.vecdot(dsV_ss, ds, axis=-1)
-    return dsV_ssds
-
-def dsV_ssds_fn_t_plus_dt(value_fn, params, state_t_plus_dt, state_t):
-    ds = state_t_plus_dt - state_t
-    dsV_ss_fn = jax.grad(dsV_s_fn, argnums=-1)
-    batch_dsV_ss_fn = jax.vmap(dsV_ss_fn_t_plus_dt, in_axes=(None, None, 0, 0))
+    dsV_ss_fn = jax.grad(dsV_s_fn_plus, argnums=-1)
+    batch_dsV_ss_fn = jax.vmap(dsV_ss_fn, in_axes=(None, None, 0, 0))
     dsV_ss = batch_dsV_ss_fn(value_fn, params, state_t_plus_dt, state_t)
     dsV_ssds = jnp.vecdot(dsV_ss, ds, axis=-1)
     return dsV_ssds

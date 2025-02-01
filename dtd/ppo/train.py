@@ -3,7 +3,7 @@ import jax.numpy as jnp
 
 from brax.envs.base import Env
 
-from dtd.common.train import Transition, dsV_s_fn_t, dsV_ssds_fn_t, dsV_s_fn_t_plus_dt, dsV_ssds_fn_t_plus_dt
+from dtd.common.train import Transition, dsV_s_fn, dsV_ssds_fn, dsV_s_fn_plus, dsV_ssds_fn_plus
 from dtd.ppo.networks import ActorCritic
 
 
@@ -283,13 +283,13 @@ def train_shjb(
                     # CALUCULATE VALUE LOSS
                     preds_baseline = network.critic.apply_fn(critic_params, traj_minibatch.obs)
                     preds_sde = (
-                        - dsV_s_fn_t(
+                        - dsV_s_fn(
                             network.critic.apply_fn,
                             critic_params,
                             traj_minibatch.next_obs,
                             traj_minibatch.obs,
                         )
-                        - jnp.where(noise_lvl <= 0.0, 0.0, 1.0) * (1 / 2) * dsV_ssds_fn_t(
+                        - jnp.where(noise_lvl <= 0.0, 0.0, 1.0) * (1 / 2) * dsV_ssds_fn(
                             network.critic.apply_fn,
                             critic_params,
                             traj_minibatch.next_obs,
@@ -483,13 +483,13 @@ def train_dtd(
                     # CALUCULATE VALUE LOSS
                     preds_baseline = network.critic.apply_fn(critic_params, traj_minibatch.obs)
                     preds_sde = (
-                        - dsV_s_fn_t_plus_dt(
+                        - dsV_s_fn_plus(
                             network.critic.apply_fn,
                             critic_params,
                             traj_minibatch.next_obs,
                             traj_minibatch.obs,
                         )
-                        + jnp.where(noise_lvl <= 0.0, 0.0, 1.0) * (1 / 2) * dsV_ssds_fn_t_plus_dt(
+                        + jnp.where(noise_lvl <= 0.0, 0.0, 1.0) * (1 / 2) * dsV_ssds_fn_plus(
                             network.critic.apply_fn,
                             critic_params,
                             traj_minibatch.next_obs,
