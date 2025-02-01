@@ -1,18 +1,18 @@
 #!/bin/bash
 # tuning parameters: lmb.lr / regularization coef / weightunet.lr
 
-export XLA_PYTHON_CLIENT_MEM_FRACTION=.70
-export CUDA_VISIBLE_DEVICES=2
+export XLA_PYTHON_CLIENT_MEM_FRACTION=.90
+export CUDA_VISIBLE_DEVICES=3 #!
 
 
 UNIXTIME=$(date +%s)
 Agent_CLASS="ppo"
-ENV_NAME="ant"
+ENV_NAME="hopper" #!
 MAX_BUDGET="1e7"
 MIN_BUDGET="1e5"
 
-TD="baseline"
-NOISE_LVL="0.0"
+TD="shjb"
+NOISE_LVL="0.01" #!
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 

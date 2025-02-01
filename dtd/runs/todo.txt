@@ -1,6 +1,0 @@
-
-
-ant 001
-halfcheetah 001
-hopper000
-hopper 005

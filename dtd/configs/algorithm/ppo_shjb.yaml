@@ -1,0 +1,22 @@
+agent_class: ppo
+TD: mix
+seed: 42
+total_timesteps: 1e6
+num_updates: _
+num_minibatches: _
+minibatch_size: 256
+num_env_steps_per_update: 4
+num_env_steps_for_eval: 1000
+num_epochs_per_update: 5
+anneal_lr: True
+max_grad_norm: 0.5
+model_kwargs:
+  activation: relu
+  learning_rate: 0.0003
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  normalize_advantage: 1.0
+  ent_coef: 0.0
+  vf_coef: 0.5
+  mix_ratio: 0.5
