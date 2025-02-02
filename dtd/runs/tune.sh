@@ -16,6 +16,13 @@ NOISE_LVL="0.01" #!
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 
+echo "Running experiment with:"
+echo "ENV_NAME: $ENV_NAME"
+echo "NOISE_LVL: $NOISE_LVL"
+echo "TD: $TD"
+echo "=============================="
+
+
 python3 ${Agent_CLASS}/tune.py --multirun \
     hydra.run.dir="configs/logs/${Agent_CLASS}/${ENV_NAME}/${TD}/${UNIXTIME}" \
     algorithm=${Agent_CLASS}_${TD} \

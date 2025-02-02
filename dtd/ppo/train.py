@@ -236,31 +236,25 @@ def train_dtd(
             return advantages
 
         advantages = calculate_advantages(traj_batch, last_val)
+        targets_baseline = advantages + traj_batch.value
 
         # CALCULATE TARGET
-        def get_sde_targets(traj_batch, last_val):
-            def calculate_target(next_value, transition):
-                value, reward, done = (
-                    transition.value,
-                    transition.reward,
-                    transition.done,
-                )
-                target = reward + jnp.log(gamma) * next_value * (1 - done)
-                return value, target
-
-            _, targets = jax.lax.scan(
-                calculate_target, last_val, traj_batch,
-                reverse=True, unroll=16,
+        def calculate_dtd_target(unused, transition):
+            value, reward = (
+                transition.value,
+                transition.reward,
             )
-            return targets
+            target = reward + jnp.log(gamma) * value
+            return None, target
 
-        targets_baseline = advantages + traj_batch.value
-        targets_sde = get_sde_targets(traj_batch, last_val)
+        _, targets_dtd = jax.lax.scan(
+            calculate_dtd_target, None, traj_batch, unroll=16,
+        )
 
         # UPDATE NETWORK
         def update_network(update_state, unused):
             def update_minibatch(network, batch_info):
-                traj_minibatch, advantages_minibatch, targets_baseline_minibatch, targets_sde_minibatch = batch_info
+                traj_minibatch, advantages_minibatch, targets_baseline_minibatch, targets_dtd_minibatch = batch_info
 
                 def loss_fn(actor_params, critic_params):
                     # CALUCULATE ACTOR LOSS
@@ -282,7 +276,7 @@ def train_dtd(
 
                     # CALUCULATE VALUE LOSS
                     preds_baseline = network.critic.apply_fn(critic_params, traj_minibatch.obs)
-                    preds_sde = (
+                    preds_dtd = (
                         - dsV_s_fn(
                             network.critic.apply_fn,
                             critic_params,
@@ -297,8 +291,8 @@ def train_dtd(
                         )
                     )
                     value_loss_baseline = jnp.mean(jnp.square(targets_baseline_minibatch - preds_baseline))
-                    value_loss_sde = jnp.mean(jnp.square(targets_sde_minibatch - preds_sde))
-                    value_loss = (1 - mix_ratio) * value_loss_baseline + mix_ratio * value_loss_sde
+                    value_loss_dtd = jnp.mean(jnp.square(targets_dtd_minibatch - preds_dtd))
+                    value_loss = (1 - mix_ratio) * value_loss_baseline + mix_ratio * value_loss_dtd
 
                     total_loss = (
                         actor_loss
@@ -325,7 +319,7 @@ def train_dtd(
 
             rng, batch_rng = jax.random.split(rng)
             permutation = jax.random.permutation(batch_rng, batch_size)
-            batch = (traj_batch, advantages, targets_baseline, targets_sde)
+            batch = (traj_batch, advantages, targets_baseline, targets_dtd)
             batch = jax.tree_util.tree_map(
                 lambda x: x.reshape((batch_size,) + x.shape[2:]), batch
             )
