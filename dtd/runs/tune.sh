@@ -7,11 +7,11 @@ export CUDA_VISIBLE_DEVICES=3 #!
 
 UNIXTIME=$(date +%s)
 Agent_CLASS="ppo"
-ENV_NAME="hopper" #!
+ENV_NAME="halfcheetah" #!
 MAX_BUDGET="1e7"
 MIN_BUDGET="1e5"
 
-TD="shjb"
+TD="dtd"
 NOISE_LVL="0.01" #!
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 

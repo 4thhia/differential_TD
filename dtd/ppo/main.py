@@ -13,7 +13,7 @@ from dtd.common.env_wrappers import create_env
 from dtd.common.train import evaluate_policy, calculate_return_stats_per_update
 from dtd.common.utils import create_ckpt_mngr
 from dtd.ppo.networks import setup_network
-from dtd.ppo.train import train_baseline, train_shjb, train_dtd
+from dtd.ppo.train import train_baseline, train_dtd
 
 @hydra.main(config_path="../configs", config_name="config", version_base="1.3")
 def main(cfg: DictConfig):
@@ -88,34 +88,11 @@ def main(cfg: DictConfig):
             vf_coef=cfg.algorithm.model_kwargs.vf_coef,
             normalize_advantage=cfg.algorithm.model_kwargs.normalize_advantage,
         )
-     elif cfg.algorithm.TD=="shjb":
-        print(f'TD type: shjb')
+    elif cfg.algorithm.TD=="dtd":
+        print(f'TD type: dtd')
         cfg.run_name += f"__mix_ratio={cfg.algorithm.model_kwargs.mix_ratio}"
 
-        (rng, network, _, _), metrics = train_shjb(
-            rng=rng,
-            env=env,
-            num_envs=cfg.env.num_envs,
-            noise_lvl=cfg.env.noise_lvl,
-            network=network,
-            num_updates=cfg.algorithm.num_updates,
-            num_env_steps_per_update=cfg.algorithm.num_env_steps_per_update,
-            num_epochs_per_update=cfg.algorithm.num_epochs_per_update,
-            minibatch_size=cfg.algorithm.minibatch_size,
-            num_minibatches=cfg.algorithm.num_minibatches,
-            gamma=cfg.algorithm.model_kwargs.gamma,
-            gae_lambda=cfg.algorithm.model_kwargs.gae_lambda,
-            clip_range=cfg.algorithm.model_kwargs.clip_range,
-            ent_coef=cfg.algorithm.model_kwargs.ent_coef,
-            vf_coef=cfg.algorithm.model_kwargs.vf_coef,
-            normalize_advantage=cfg.algorithm.model_kwargs.normalize_advantage,
-            mix_ratio=cfg.algorithm.model_kwargs.mix_ratio,
-        )
-    elif cfg.algorithm.TD=="mix":
-        print(f'TD type: mix')
-        cfg.run_name += f"__mix_ratio={cfg.algorithm.model_kwargs.mix_ratio}"
-
-        (rng, network, _, _), metrics = train_mix(
+        (rng, network, _, _), metrics = train_dtd(
             rng=rng,
             env=env,
             num_envs=cfg.env.num_envs,
@@ -138,7 +115,7 @@ def main(cfg: DictConfig):
     else:
         raise ValueError(
         f"Invalid value for cfg.algorithm.TD: {cfg.algorithm.TD}. "
-        "Expected 'baseline' or 'sde'."
+        "Expected 'baseline' or 'dtd'."
     )
 
     states = {
@@ -154,6 +131,7 @@ def main(cfg: DictConfig):
     os.makedirs(save_dir, exist_ok=True)
     cfg_dict = OmegaConf.to_container(cfg, resolve=True)
 
+    # 2. JSONファイルとして保存
     with open(os.path.join(save_dir, "configs.json"), "w") as f:
         json.dump(cfg_dict, f, indent=4)
 
