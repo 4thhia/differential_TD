@@ -170,7 +170,7 @@ def create_env(
     env_name: str,
     backend: str,
     noise_lvl: Optional[float] = 0,
-    episode_length: int = 3000,
+    episode_length: int = 1000,
     action_repeat: int = 1,
     auto_reset: bool = True,
     logging: bool = True,

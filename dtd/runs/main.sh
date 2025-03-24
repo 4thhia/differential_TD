@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export XLA_PYTHON_CLIENT_MEM_FRACTION=.90
-export CUDA_VISIBLE_DEVICES=0 #,1,2
+export CUDA_VISIBLE_DEVICES=3 #,1,2
 
 
 UNIXTIME=$(date +%s)
@@ -9,8 +9,8 @@ ALGO="ppo"
 ENV_NAME="halfcheetah"
 MAX_BUDGET="2500000"
 
-TD="baseline" # baseline / sde / mix
-NOISE_LVL="0.00"
+TD="dtd" # baseline / dtd / shjb
+NOISE_LVL="0.01"
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
