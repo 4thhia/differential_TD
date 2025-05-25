@@ -13,7 +13,7 @@ from dtd.common.env_wrappers import create_env
 from dtd.common.train import evaluate_policy, calculate_return_stats_per_update
 from dtd.common.utils import create_ckpt_mngr
 from dtd.ppo.networks import setup_network
-from dtd.ppo.train import train_baseline, train_shjb, train_dtd
+from dtd.ppo.train import train_baseline, train_naive_dtd, train_dtd
 
 @hydra.main(config_path="../configs", config_name="config", version_base="1.3")
 def main(cfg: DictConfig):
@@ -88,11 +88,11 @@ def main(cfg: DictConfig):
             vf_coef=cfg.algorithm.model_kwargs.vf_coef,
             normalize_advantage=cfg.algorithm.model_kwargs.normalize_advantage,
         )
-    elif cfg.algorithm.TD=="shjb":
-        print(f'TD type: shjb')
+    elif cfg.algorithm.TD=="naive":
+        print(f'TD type: naive dTD')
         cfg.run_name += f"__mix_ratio={cfg.algorithm.model_kwargs.mix_ratio}"
 
-        (rng, network, _, _), metrics = train_shjb(
+        (rng, network, _, _), metrics = train_naive_dtd(
             rng=rng,
             env=env,
             num_envs=cfg.env.num_envs,
@@ -112,7 +112,7 @@ def main(cfg: DictConfig):
             mix_ratio=cfg.algorithm.model_kwargs.mix_ratio,
         )
     elif cfg.algorithm.TD=="dtd":
-        print(f'TD type: dtd')
+        print(f'TD type: dTD')
         cfg.run_name += f"__mix_ratio={cfg.algorithm.model_kwargs.mix_ratio}"
 
         (rng, network, _, _), metrics = train_dtd(
@@ -148,12 +148,12 @@ def main(cfg: DictConfig):
 
     means, stds = calculate_return_stats_per_update(metrics["returned_episode_returns"])
 
-    save_dir = f"result/metrics/{cfg.algorithm.agent_class}/{cfg.env.name}/noise{str(cfg.env.noise_lvl).replace('.', '').zfill(3)}/{cfg.algorithm.TD}/{cfg.run_time}"
+    # Save as json
+    save_dir = f"results/metrics/{cfg.algorithm.agent_class}/{cfg.env.name}/{cfg.algorithm.TD}/noise_lvl{str(cfg.env.noise_lvl).replace('.', '').zfill(3)}/{cfg.run_time}"
     print(f"save_dir:{save_dir}")
     os.makedirs(save_dir, exist_ok=True)
     cfg_dict = OmegaConf.to_container(cfg, resolve=True)
 
-    # 2. JSONファイルとして保存
     with open(os.path.join(save_dir, "configs.json"), "w") as f:
         json.dump(cfg_dict, f, indent=4)
 

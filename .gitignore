@@ -10,11 +10,6 @@
 **/mlruns/
 **/multirun/
 **/.DS_Store
-**/experiments/
 **/tests/
 **/hpo_results/
-**/result/
-memo.txt
-Dockerfile
-run.sh
-setup.sh
+**/results/

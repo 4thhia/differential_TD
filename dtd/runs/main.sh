@@ -1,20 +1,27 @@
 #!/bin/bash
 
 export XLA_PYTHON_CLIENT_MEM_FRACTION=.90
-export CUDA_VISIBLE_DEVICES=3 #,1,2
+export CUDA_VISIBLE_DEVICES=0
 
 
 UNIXTIME=$(date +%s)
 ALGO="ppo"
-ENV_NAME="halfcheetah"
+ENV_NAME="hopper"
 MAX_BUDGET="2500000"
 
-TD="dtd" # baseline / dtd / shjb
+TD="dtd" # baseline / naive / dtd
 NOISE_LVL="0.01"
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-source "${SCRIPT_DIR}/incumbent/${ENV_NAME}/${TD}/noise${NOISE_LVL_STR}.sh"
+source "${SCRIPT_DIR}/incumbent/${ENV_NAME}/${TD}/noise_lvl${NOISE_LVL_STR}.sh"
+
+
+echo "Running experiment with:"
+echo "ENV_NAME: $ENV_NAME"
+echo "NOISE_LVL: $NOISE_LVL"
+echo "TD: $TD"
+echo "=============================="
 
 
 python3 ${ALGO}/main.py \

@@ -18,7 +18,7 @@ def create_ckpt_mngr(
     # Orbax checkpoint manager setup
     noise_lvl_str = str(noise_lvl).replace('.', '').zfill(3)
 
-    checkpoint_dir = f"models/{agent_class}/{env_name}/{TD}/noise{noise_lvl_str}/{run_time}"
+    checkpoint_dir = f"models/{agent_class}/{env_name}/{TD}/noise_lvl{noise_lvl_str}/{run_time}"
 
     os.makedirs(checkpoint_dir, exist_ok=True)
     # Configure CheckpointManager with the new format

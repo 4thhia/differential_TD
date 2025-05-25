@@ -9,7 +9,7 @@ import optax
 from dtd.common.env_wrappers import create_env
 from dtd.common.train import evaluate_policy
 from dtd.ppo.networks import setup_network
-from dtd.ppo.train import train_baseline, train_dtd, train_shjb
+from dtd.ppo.train import train_baseline, train_naive_dtd, train_dtd
 
 
 @hydra.main(config_path="../configs", config_name="config", version_base="1.3")
@@ -76,9 +76,9 @@ def main(cfg: DictConfig):
             vf_coef=cfg.algorithm.model_kwargs.vf_coef,
             normalize_advantage=cfg.algorithm.model_kwargs.normalize_advantage,
         )
-    elif cfg.algorithm.TD=="shjb":
-        print(f'TD type: shjb')
-        (rng, network, _, _), metrics = train_shjb(
+    elif cfg.algorithm.TD=="naive":
+        print(f'TD type: naive dTD')
+        (rng, network, _, _), metrics = train_naive_dtd(
             rng=rng,
             env=env,
             num_envs=cfg.env.num_envs,

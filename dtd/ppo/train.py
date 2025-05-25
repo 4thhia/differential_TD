@@ -168,7 +168,7 @@ def train_baseline(
     return runner_state, metrics
 
 
-def train_shjb(
+def train_naive_dtd(
     rng: jax.random.PRNGKey,
     env: Env,
     num_envs: int,
