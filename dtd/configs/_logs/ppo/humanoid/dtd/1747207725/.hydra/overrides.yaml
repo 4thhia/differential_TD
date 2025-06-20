@@ -1,0 +1,15 @@
+- env.name=humanoid
+- env.noise_lvl=0.00
+- algorithm=ppo_dtd
+- algorithm.total_timesteps=2500000
+- algorithm.num_env_steps_per_update=16
+- algorithm.num_epochs_per_update=10
+- algorithm.minibatch_size=256
+- algorithm.model_kwargs.learning_rate=0.001075153905643759
+- algorithm.model_kwargs.mix_ratio=0.33159218906798826
+- algorithm.model_kwargs.gae_lambda=0.8880142695907592
+- algorithm.model_kwargs.clip_range=0.7125623349891503
+- algorithm.model_kwargs.normalize_advantage=0.0
+- algorithm.model_kwargs.vf_coef=0.0535497409069704
+- algorithm.model_kwargs.ent_coef=0.0017430891372372192
+- run_time=1747207725

@@ -1,0 +1,91 @@
+run_name: _
+run_time: 1747307855
+env:
+  name: ant
+  backend: generalized
+  num_envs: 64
+  num_envs_for_eval: 32
+  noise_lvl: 0.0
+  action_size: _
+  observation_size: _
+  dt: _
+load: false
+save: false
+reward_curves: false
+seed: 0
+algorithm:
+  agent_class: ppo
+  TD: dtd
+  seed: 42
+  total_timesteps: 2500000
+  num_updates: _
+  num_minibatches: _
+  minibatch_size: 256
+  num_env_steps_per_update: 32
+  num_env_steps_for_eval: 1000
+  num_epochs_per_update: 16
+  anneal_lr: true
+  max_grad_norm: 0.5
+  model_kwargs:
+    activation: relu
+    learning_rate: 7.935924682424442e-05
+    gamma: 0.99
+    gae_lambda: 0.8047651992558381
+    clip_range: 0.5196947669134843
+    normalize_advantage: 0.0
+    ent_coef: 0.13325553339100038
+    vf_coef: 0.27367302546273287
+    mix_ratio: 0.24083342196786595
+search_space:
+  hyperparameters:
+    algorithm.num_env_steps_per_update:
+      type: categorical
+      choices:
+      - 8
+      - 16
+      - 32
+    algorithm.minibatch_size:
+      type: categorical
+      choices:
+      - 256
+      - 512
+    algorithm.num_epochs_per_update:
+      type: uniform_int
+      lower: 5
+      upper: 20
+      log: false
+    algorithm.model_kwargs.learning_rate:
+      type: uniform_float
+      lower: 1.0e-06
+      upper: 0.005
+      log: true
+    algorithm.model_kwargs.normalize_advantage:
+      type: categorical
+      choices:
+      - 0.0
+      - 1.0
+    algorithm.model_kwargs.gae_lambda:
+      type: uniform_float
+      lower: 0.8
+      upper: 0.9999
+      log: false
+    algorithm.model_kwargs.clip_range:
+      type: uniform_float
+      lower: 0.0
+      upper: 0.9
+      log: false
+    algorithm.model_kwargs.ent_coef:
+      type: uniform_float
+      lower: 0.0
+      upper: 0.3
+      log: false
+    algorithm.model_kwargs.vf_coef:
+      type: uniform_float
+      lower: 0.0
+      upper: 1.0
+      log: false
+    algorithm.model_kwargs.mix_ratio:
+      type: uniform_float
+      lower: 0.0
+      upper: 1.0
+      log: false

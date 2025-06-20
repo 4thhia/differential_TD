@@ -1,0 +1,15 @@
+- env.name=halfcheetah
+- env.noise_lvl=0.00
+- algorithm=ppo_dtd
+- algorithm.total_timesteps=2500000
+- algorithm.num_env_steps_per_update=8
+- algorithm.num_epochs_per_update=8
+- algorithm.minibatch_size=512
+- algorithm.model_kwargs.learning_rate=0.0006585676462596407
+- algorithm.model_kwargs.mix_ratio=0.6547194057090427
+- algorithm.model_kwargs.gae_lambda=0.8438960401775698
+- algorithm.model_kwargs.clip_range=0.34265129604640837
+- algorithm.model_kwargs.normalize_advantage=0.0
+- algorithm.model_kwargs.vf_coef=0.9592619112875895
+- algorithm.model_kwargs.ent_coef=0.032421711330095936
+- run_time=1747173792

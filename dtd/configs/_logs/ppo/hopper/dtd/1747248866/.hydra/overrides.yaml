@@ -1,0 +1,15 @@
+- env.name=hopper
+- env.noise_lvl=0.00
+- algorithm=ppo_dtd
+- algorithm.total_timesteps=2500000
+- algorithm.num_env_steps_per_update=32
+- algorithm.num_epochs_per_update=19
+- algorithm.minibatch_size=256
+- algorithm.model_kwargs.learning_rate=0.00035213976781949696
+- algorithm.model_kwargs.mix_ratio=0.5719080364155529
+- algorithm.model_kwargs.gae_lambda=0.9984669605173471
+- algorithm.model_kwargs.clip_range=0.07496227601057392
+- algorithm.model_kwargs.normalize_advantage=0.0
+- algorithm.model_kwargs.vf_coef=0.6748616031464183
+- algorithm.model_kwargs.ent_coef=0.04631340363787527
+- run_time=1747248866

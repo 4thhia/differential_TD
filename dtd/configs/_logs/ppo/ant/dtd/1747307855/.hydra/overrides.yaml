@@ -1,0 +1,15 @@
+- env.name=ant
+- env.noise_lvl=0.00
+- algorithm=ppo_dtd
+- algorithm.total_timesteps=2500000
+- algorithm.num_env_steps_per_update=32
+- algorithm.num_epochs_per_update=16
+- algorithm.minibatch_size=256
+- algorithm.model_kwargs.learning_rate=0.00007935924682424442
+- algorithm.model_kwargs.mix_ratio=0.24083342196786595
+- algorithm.model_kwargs.gae_lambda=0.8047651992558381
+- algorithm.model_kwargs.clip_range=0.5196947669134843
+- algorithm.model_kwargs.normalize_advantage=0.0
+- algorithm.model_kwargs.vf_coef=0.27367302546273287
+- algorithm.model_kwargs.ent_coef=0.13325553339100038
+- run_time=1747307855
