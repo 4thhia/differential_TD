@@ -44,7 +44,13 @@ def load_model(cfg_path: str, network:str, step: int):
     """
     # Reinitialize the checkpoint manager
     cfg = OmegaConf.load(cfg_path)
-    ckpt_mngr = create_ckpt_mngr(cfg)
+    ckpt_mngr = create_ckpt_mngr(
+        agent_class=cfg.algorithm.agent_class,
+        env_name=cfg.env.name,
+        TD=cfg.algorithm.TD,
+        noise_lvl=cfg.env.noise_lvl,
+        run_time=cfg.run_time,
+    )
     # Restore the checkpoint at the specified step
     loaded_state = ckpt_mngr.restore(step)[network]
 
