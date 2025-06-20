@@ -15,8 +15,8 @@ This is the official repository for [**differential TD**](https://arxiv.org/abs/
 2. Launch the container:
 
    ```bash
-   # Replace "your_username" in run.sh with your username
-   bash run.sh
+   # Replace "your_username" in launch.sh with your username
+   bash launch.sh
    ```
 
 3. Run the setup inside the container:
