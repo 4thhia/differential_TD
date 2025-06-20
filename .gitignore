@@ -3,7 +3,6 @@
 **/tmp/
 **/wandb/
 **/logs/
-**/_logs/
 **/models/
 **/out/
 **/outputs/
