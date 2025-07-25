@@ -33,3 +33,8 @@ hyperparameters:
     lower: 0.0
     upper: 1.0
     log: false
+  algorithm.model_kwargs.mix_ratio:
+    type: uniform_float
+    lower: 0.01
+    upper: 1.0
+    log: false

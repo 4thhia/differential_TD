@@ -6,7 +6,7 @@ export CUDA_VISIBLE_DEVICES=0
 
 
 UNIXTIME=$(date +%s)
-Agent_CLASS="ppo"
+AGENT_CLASS="ppo"
 ENV_NAME="hopper"
 MAX_BUDGET="1e7"
 MIN_BUDGET="1e5"
@@ -23,9 +23,9 @@ echo "TD: $TD"
 echo "=============================="
 
 
-python3 ${Agent_CLASS}/tune.py --multirun \
-    hydra.run.dir="configs/logs/${Agent_CLASS}/${ENV_NAME}/${TD}/${UNIXTIME}" \
-    algorithm=${Agent_CLASS}_${TD} \
+python3 ${AGENT_CLASS}/tune.py --multirun \
+    hydra.run.dir="configs/logs/${AGENT_CLASS}/${ENV_NAME}/${TD}/${UNIXTIME}" \
+    algorithm=${AGENT_CLASS}_${TD} \
     algorithm.total_timesteps=${MAX_BUDGET} \
     hydra.sweeper.dehb_kwargs.min_budget=${MIN_BUDGET} \
     env.name=${ENV_NAME} \

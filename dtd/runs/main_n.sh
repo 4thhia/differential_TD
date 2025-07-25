@@ -4,7 +4,7 @@
 export XLA_PYTHON_CLIENT_MEM_FRACTION=.90
 export CUDA_VISIBLE_DEVICES=2
 
-ALGO="ppo"
+AGENT_CLASS="ppo"
 ENV_NAME="hopper"
 MAX_BUDGET="2500000"
 TD="baseline"            # baseline / dtd / shjb
@@ -13,16 +13,16 @@ NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 # load incumbent
-source "${SCRIPT_DIR}/incumbent/${ENV_NAME}/${TD}/noise${NOISE_LVL_STR}.sh"
+source "${SCRIPT_DIR}/incumbent/${AGENT_CLASS}/${ENV_NAME}/${TD}/noise${NOISE_LVL_STR}.sh"
 
 # 出力先ディレクトリを作成
-mkdir -p results/${ENV_NAME}
+mkdir -p results/${AGENT_CLASS}/${ENV_NAME}
 
 N_RUNS=10
 
 for i in $(seq 0 $((N_RUNS-1))); do
   UNIXTIME=$(date +%s)
-  RUN_DIR="configs/logs/${ALGO}/${ENV_NAME}/${TD}/${UNIXTIME}"
+  RUN_DIR="configs/logs/${AGENT_CLASS}/${ENV_NAME}/${TD}/${UNIXTIME}"
   mkdir -p "$RUN_DIR"
 
   echo "=== Run #$i at $(date) ==="
@@ -33,11 +33,11 @@ for i in $(seq 0 $((N_RUNS-1))); do
   start_time=$(date +%s)
 
   # 12時間タイムアウト付きで main.py を実行
-  timeout 12h python3 ${ALGO}/main.py \
+  timeout 12h python3 ${AGENT_CLASS}/main.py \
     hydra.run.dir="$RUN_DIR" \
     env.name=${ENV_NAME} \
     env.noise_lvl=${NOISE_LVL} \
-    algorithm=${ALGO}_${TD} \
+    algorithm=${AGENT_CLASS}_${TD} \
     algorithm.total_timesteps=${MAX_BUDGET} \
     algorithm.num_env_steps_per_update=${NUM_ENV_STEPS_PER_UPDATE} \
     algorithm.num_epochs_per_update=${NUM_EPOCHS_PER_UPDATE} \

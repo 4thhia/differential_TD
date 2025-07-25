@@ -1,5 +1,5 @@
 agent_class: a2c
-TD: naive
+TD: dtd
 seed: 42
 total_timesteps: 1e6
 num_updates: _
