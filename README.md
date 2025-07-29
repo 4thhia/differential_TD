@@ -1,6 +1,6 @@
 # differential TD (dTD)
 
-This is the official repository for [**differential TD**](https://arxiv.org/abs/2505.15544), a temporal-difference method for stochastic continuous dynamics.
+This is the official repository for differential TD, a temporal-difference method for stochastic continuous dynamics.
 
 ## Setup
 
