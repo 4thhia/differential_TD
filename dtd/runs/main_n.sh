@@ -2,12 +2,12 @@
 # Batch execution of main.sh experiments
 
 export XLA_PYTHON_CLIENT_MEM_FRACTION=.90
-export CUDA_VISIBLE_DEVICES=2
+export CUDA_VISIBLE_DEVICES=3
 
-AGENT_CLASS="ppo"
+AGENT_CLASS="a2c"
 ENV_NAME="hopper"
 MAX_BUDGET="2500000"
-TD="baseline"            # baseline / dtd / shjb
+TD="dtd"            # baseline / naive / dtd
 NOISE_LVL="0.01"
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
@@ -18,7 +18,7 @@ source "${SCRIPT_DIR}/incumbent/${AGENT_CLASS}/${ENV_NAME}/${TD}/noise${NOISE_LV
 # 出力先ディレクトリを作成
 mkdir -p results/${AGENT_CLASS}/${ENV_NAME}
 
-N_RUNS=10
+N_RUNS=20
 
 for i in $(seq 0 $((N_RUNS-1))); do
   UNIXTIME=$(date +%s)

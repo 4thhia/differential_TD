@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USER="your_username"
+USER="4thhia"
 
 docker container run --rm -it \
     -u $(id -u):$(id -g) \

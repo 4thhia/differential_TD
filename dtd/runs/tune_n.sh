@@ -7,7 +7,7 @@ Agent_CLASS="ppo"
 ENV_NAME="pusher" # inverted_pendulum 'walker2d' "reacher" "pusher"
 MAX_BUDGET="1e7"
 MIN_BUDGET="1e5"
-TD="dtd"
+TD="dtd" # baseline / naive / dtd
 NOISE_LVL="0.01"
 NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 

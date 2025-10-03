@@ -19,3 +19,4 @@ model_kwargs:
   ent_coef: 0.0
   vf_coef: 0.5
   mix_ratio: 0.5
+  clip_range: _
