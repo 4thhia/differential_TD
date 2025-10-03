@@ -13,7 +13,7 @@ NOISE_LVL_STR=$(echo $NOISE_LVL | sed 's/\.//g')
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 # load incumbent
-source "${SCRIPT_DIR}/incumbent/${AGENT_CLASS}/${ENV_NAME}/${TD}/noise${NOISE_LVL_STR}.sh"
+source "${SCRIPT_DIR}/incumbent/${AGENT_CLASS}/${ENV_NAME}/${TD}/noise_lvl${NOISE_LVL_STR}.sh"
 
 # 出力先ディレクトリを作成
 mkdir -p results/${AGENT_CLASS}/${ENV_NAME}
