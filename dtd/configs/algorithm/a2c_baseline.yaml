@@ -1,4 +1,4 @@
-agent_class: ppo
+agent_class: a2c
 TD: baseline
 seed: 42
 total_timesteps: 1e6
@@ -15,7 +15,6 @@ model_kwargs:
   learning_rate: 0.0003
   gamma: 0.99
   gae_lambda: 0.95
-  clip_range: 0.2
   normalize_advantage: 1.0
   ent_coef: 0.0
   vf_coef: 0.5

@@ -23,11 +23,6 @@ hyperparameters:
     lower: 0.8
     upper: 0.9999
     log: false
-  algorithm.model_kwargs.clip_range:
-    type: uniform_float
-    lower: 0.0
-    upper: 0.9
-    log: false
   algorithm.model_kwargs.ent_coef:
     type: uniform_float
     lower: 0.0
