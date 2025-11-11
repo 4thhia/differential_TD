@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USER="4thhia"
+USER="your_username"
 
 # Specify UID & GID
 UID=${UID:-$(id -u)}

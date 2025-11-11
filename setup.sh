@@ -14,10 +14,10 @@ echo "Installation complete."
 
 # Replace tree.map > tree_util.tree_map
 files=(
-    "/home/4thhia/.local/lib/python3.10/site-packages/brax/io/mjcf.py"
-    "/home/4thhia/.local/lib/python3.10/site-packages/brax/scan.py"
-    "/home/4thhia/.local/lib/python3.10/site-packages/brax/generalized/dynamics.py"
-    "/home/4thhia/.local/lib/python3.10/site-packages/brax/generalized/constraint.py"
+    "/home/your_username/.local/lib/python3.10/site-packages/brax/io/mjcf.py"
+    "/home/your_username/.local/lib/python3.10/site-packages/brax/scan.py"
+    "/home/your_username/.local/lib/python3.10/site-packages/brax/generalized/dynamics.py"
+    "/home/your_username/.local/lib/python3.10/site-packages/brax/generalized/constraint.py"
 )
 
 for file in "${files[@]}"; do
